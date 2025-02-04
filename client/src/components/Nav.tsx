@@ -5,6 +5,10 @@ const Nav = () => {
     <div>
         <Link to='/calculate-price'>Calculate Price</Link>
         <Link to='/current-price'>Current Price</Link>
+        <div>
+          <Link >Login</Link>
+          <Link>Signup</Link>
+        </div>
     </div>
   );
 };

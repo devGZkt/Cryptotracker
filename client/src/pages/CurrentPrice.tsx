@@ -1,16 +1,37 @@
 import Nav from '../components/Nav';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const CurrentPrice = () => {
   
     const [bitcoinPrice, setBitcoinPrice] = useState(0);
+    const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBitcoinPrice = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/bitcoin-price');
+        console.log(response.data.bitcoinPrice);
+        setBitcoinPrice(response.data.bitcoinPrice);
+      }
+      catch (err) {
+        setError(err);
+      }
+      console.log(bitcoinPrice)
+    }
+    fetchBitcoinPrice();
+  }, [])
+
+  useEffect(() => {
+    console.log(bitcoinPrice);
+  }, [bitcoinPrice]);
 
   return (
     <div>
         <Nav />
         <div>
             <div>
-                Current Price is per bitcoin
+                Current Bitcoin Price: ${bitcoinPrice}
             </div>
             <div>
                 

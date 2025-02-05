@@ -1,34 +1,31 @@
 import express from 'express';
-import axios from 'axios';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import userRoutes from './routes/users/users.js';
+import loginRoutes from './routes/login/login.js';
+import connectDB from './config/db.js';
 dotenv.config();
 
 
 const app = express();
-const PORT = process.env.PORT || 3030;
+const PORT = 3001;
+
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 
 app.use(express.json());
-app.use(cors());
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error('MongoDB connection error: ' + err))
-
+connectDB();
 
 app.use('/users', userRoutes);
+
+app.use('/login', loginRoutes);
 
 app.listen(PORT, () => console.log(`Running on port http://localhost:${PORT}`))
 .on('error', (err) => {
   console.error(`Error occurred:`, err);
 })
-
-
-
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}/solana`);
-});

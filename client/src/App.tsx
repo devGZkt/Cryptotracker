@@ -4,6 +4,7 @@ import CalculatePrice from './pages/CalculatePrice'
 import Home from './pages/Home'
 import Login from './pages/auth/Login'
 import Signup from './pages/auth/Signup'
+import Dashboard from './pages/Dashboard'
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/calculate-price' element={<CalculatePrice />} />
           <Route path='/current-price' element={<CurrentPrice />} />
+          <Route path='/dashboard' element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
-const { Module } = mongoose;
-
 
 let userSchema = new Schema({
     username: {

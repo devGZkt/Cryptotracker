@@ -1,6 +1,7 @@
-import Nav from '../../components/Nav';
+import Nav from '../../components/PublicNav';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
@@ -8,6 +9,8 @@ const Login = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [messageServer, setMessageServer] = useState<string>('');
+  const navigate = useNavigate();
+  
 
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,14 +26,29 @@ const Login = () => {
       const response = await axios.post('http://localhost:3001/login', {
         username,
         password
-      });
+      }, 
+      {
+        withCredentials: true
+      }
+  );
   
       setMessageServer(response.data.message);
       console.log("Login success:", response.data);
-    } catch (err: any) {
-      if (err.response) {
-        setMessageServer(err.response.data.message);
+
+      if (response.data.token){
+        localStorage.setItem("token", response.data.token)
+      }
+      console.log(response.status);
+      if(response.status === 200){
+        navigate('/dashboard');
       } else {
+        alert("Login failed");
+      }
+
+    } catch (err: unknown) {
+      if (err instanceof Error && "response" in err && err.response) {
+        setMessageServer((err.response as any).data.message);
+       } else {
         setMessageServer("An error occurred.");
       }
     }

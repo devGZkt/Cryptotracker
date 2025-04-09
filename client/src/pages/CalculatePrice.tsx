@@ -1,4 +1,4 @@
-import Nav from '../components/Nav';
+import Nav from '../components/PublicNav';
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 
